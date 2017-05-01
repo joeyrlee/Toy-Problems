@@ -9,7 +9,7 @@ const organize = arr => arr.sort((a, b) => Number(a[1]) - Number(b[1]));
 
 /* Linear-Time with O(n) space */
 const organize2 = arr => {
-  const n = Number(arr[arr.length - 1][1]);
+  const n = arr.length;
   let aStart = 0;
   let bStart = n;
   let cStart = n * 2;
@@ -25,3 +25,4 @@ const organize2 = arr => {
   }
   return results;
 };
+
