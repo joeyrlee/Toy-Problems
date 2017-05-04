@@ -26,3 +26,49 @@ const organize2 = arr => {
   return results;
 };
 
+/* Linear-Time with constant space */
+//1. Loop through array (sans first and last entries)
+//2. If the current entry isn't correct,
+//3. Find the correct entry's index
+//4. Swap the current entry with the correct entry 
+//5. Rinse and Repeat
+const organize3 = arr => {
+  const n = arr.length / 3;
+
+  const identifyCorrectEntry = i => {
+    const letters = ['a','b','c'];
+    let correctLetter;
+    if (i % 3 === 0) {
+      correctLetter = 'a';
+    } else if ((i - 1) % 3 === 0) {
+      correctLetter = 'b';
+    } else {
+      correctLetter = 'c';
+    }
+    return correctLetter + Math.ceil((i + 1) / 3);
+  };
+  
+  const findCorrectIdx = (currIdx, correctEntry) => {
+    while (currIdx < arr.length - 1) {
+      if (arr[currIdx] === correctEntry) {
+        return currIdx;
+      }
+      currIdx++;
+    }
+  };
+
+  const swap = (incorrectIdx, correctIdx) => {
+    [arr[correctIdx], arr[incorrectIdx]] = [arr[incorrectIdx], arr[correctIdx]];
+  };
+
+  //main function body
+  for (var i = 1; i < arr.length - 1; i++) {
+    let correctEntry = identifyCorrectEntry(i);
+    if (arr[i] !== correctEntry) {
+      let correctIdx = findCorrectIdx(i, correctEntry);
+      swap(i, correctIdx);
+    }
+  }
+  
+  return arr;
+};
