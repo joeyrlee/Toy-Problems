@@ -2,29 +2,37 @@
 
 /* Assert function  */
 const assert = (testNum, expected, actual) => {
-	return expected === actual
-	  ? `Test ${testNum} passed`
-	  : throw `Test ${testNum} Failed
-	  				 expected result: ${expected}
-	  				 actual result: ${}`;
+	if (expected === actual) {
+		console.log('Test',testNum,'Passed!');
+	} else {
+	  console.log('Test',testNum,'Failed!\n'+
+								'expected result:',expected,'\n'+
+								'Actual Result:',actual,'\n');
+	}
 };
 
 
-const multiply;
+const multiply = (a, b) => {
+	if (a === 0 || b === 0) {
+		return 0;
+	}
+};
 
 /* Multiply Tests */
+assert(1, 0, multiply(0, 0));
+assert(2, 0, multiply(1, 0));
+assert(3, 0, multiply(0, 1));
 
-
-const divide;
+// const divide;
 
 /* Divide Tests */
 
 
-const modulo;
+// const modulo;
 
 /* Modulo Tests */
 
 
-const power;
+// const power;
 
 /* Power Tests */
