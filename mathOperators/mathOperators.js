@@ -21,15 +21,24 @@ const multiply = (a, b) => {
 		[a, b] = [b, a];
 	}
 
-	let result = a;
-	if (a > 0 && b > 0) {
+	const multiplyByLooping = (a, b) => {
+		let result = a;
 		while (b !== 1) {
 			result += a;
 			b--;
 		}
 		return result;
+	};
+
+	//if a < 0, then both numbers are negative
+	if (a < 0) {
+		return multiplyByLooping(-a, -b);
+	//else if just b is negative
+	} else if (b < 0) {
+		return -multiplyByLooping(a, -b);
 	}
-	//if negative
+	//else both numbers are positive
+	return multiplyByLooping(a, b);
 };
 
 /* Multiply Tests */
