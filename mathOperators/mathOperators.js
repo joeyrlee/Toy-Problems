@@ -17,28 +17,23 @@ const multiply = (a, b) => {
 		return 0;
 	} else if (typeof a !== 'number' || typeof b !== 'number') {
 		return NaN;
-	} else if (b > a) {
+	} else if (a < b) {
 		[a, b] = [b, a];
 	}
-
-	const multiplyByLooping = (a, b) => {
-		let result = a;
-		while (b !== 1) {
-			result += a;
-			b--;
-		}
-		return result;
-	};
-
-	//if a < 0, then both numbers are negative
+	//accommodate two negative inputs
 	if (a < 0) {
-		return multiplyByLooping(-a, -b);
-	//else if just b is negative
-	} else if (b < 0) {
-		return -multiplyByLooping(a, -b);
+		a = -a, b = -b;
 	}
-	//else both numbers are positive
-	return multiplyByLooping(a, b);
+
+	//base case
+	if (b === 1) {
+		return a;
+	}
+	//recursive case
+	//accommodate b being negative
+	return b < 0
+		? -(a + multiply(a, -b - 1))
+		: a + multiply(a, --b);
 };
 
 /* Multiply Tests */
