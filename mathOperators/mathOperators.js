@@ -50,10 +50,23 @@ assert(7, -1, multiply(1, -1));
 assert(8, -5, multiply(1, -5));
 assert(9, 10, multiply(-2, -5));
 
-// const divide;
+
+
+const divide = (a, b) => {
+}
 
 /* Divide Tests */
+assert(11, 0, divide(0, 1));
 
+assert(12, Infinity, divide(1, 0));
+assert(13, -Infinity, divide(-1, 0));
+
+assert(14, 5, divide(10, 2));
+
+assert(15, -5, divide(-10, 2));
+assert(16, 5, divide(10, -2));
+
+assert(17, .5, divide(5, 10));
 
 // const modulo;
 
