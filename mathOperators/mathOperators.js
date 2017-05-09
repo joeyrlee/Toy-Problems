@@ -1,4 +1,4 @@
-/* Write Multiply, Divide, Modulo, and Power functions */
+/* Write Multiply, Divide, Modulo, and Power Functions Using Only Addition And Subtraction */
 
 /* Assert function  */
 const assert = (testNum, expected, actual) => {
@@ -41,6 +41,7 @@ assert(1, 0, multiply(0, 0));
 assert(2, 0, multiply(1, 0));
 
 assert(3, 0, multiply(0, '4'));
+//NaN can't equal NaN so strings are compared instead
 assert(4, 'NaN', multiply(1, '4').toString());
 
 assert(5, 4, multiply(2, 2));
@@ -50,9 +51,34 @@ assert(7, -1, multiply(1, -1));
 assert(8, -5, multiply(1, -5));
 assert(9, 10, multiply(-2, -5));
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
 const divide = (a, b) => {
+	if (a === 0) {
+		return 0;
+	} else if (b === 0) {
+		return a < 0
+		  ? -Infinity
+		  : Infinity;
+	}
+
+	let isNegative = false;
+	if (a < 0 && b > 0) {
+		a = -a;
+		isNegative = true;
+	} else if (a > 0 && b < 0) {
+		b = -b;
+		isNegative = true;
+	} else {
+		a = Math.abs(a);
+		b = Math.abs(b);
+	}
+	let count = 0;
+	while (a > 0) {
+		a -= b;
+		count++;
+	}
+	return isNegative ? -count : count;
 }
 
 /* Divide Tests */
@@ -61,12 +87,11 @@ assert(11, 0, divide(0, 1));
 assert(12, Infinity, divide(1, 0));
 assert(13, -Infinity, divide(-1, 0));
 
-assert(14, 5, divide(10, 2));
+assert(14, 5, divide(5, 1));
+assert(15, 5, divide(10, 2));
 
-assert(15, -5, divide(-10, 2));
-assert(16, 5, divide(10, -2));
-
-assert(17, .5, divide(5, 10));
+assert(16, -5, divide(-10, 2));
+assert(17, -5, divide(10, -2));
 
 // const modulo;
 
