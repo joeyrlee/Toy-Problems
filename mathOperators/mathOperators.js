@@ -90,11 +90,25 @@ assert(15, 5, divide(10, 2));
 assert(16, -5, divide(-10, 2));
 assert(17, -5, divide(10, -2));
 
-// const modulo;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+
+const modulo = (a, b) => {
+
+};
 
 /* Modulo Tests */
+assert(21, 0, modulo(0, 5));
+assert(22, 'NaN', modulo(5, 0).toString());
 
+assert(23, 0, modulo(10, 5));
+assert(24, 2, modulo(8, 3));
+
+assert(25, 2, modulo(-6, 4));
+assert(26, 2, modulo(5, -2));
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
 // const power;
 
 /* Power Tests */
+
