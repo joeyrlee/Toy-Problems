@@ -11,7 +11,7 @@ const assert = (testNum, expected, actual) => {
 	}
 };
 
-
+//currently only designed to accommodate integers
 const multiply = (a, b) => {
 	if (a === 0 || b === 0) {
 		return 0;
@@ -53,6 +53,7 @@ assert(9, 10, multiply(-2, -5));
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
+//currently only designed to accommodate integers
 const divide = (a, b) => {
 	if (a === 0) {
 		return 0;
@@ -92,8 +93,20 @@ assert(17, -5, divide(10, -2));
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
+//currently only designed to accommodate integers
 const modulo = (a, b) => {
+	if (a === 0) {
+		return 0;
+	} else if (b === 0) {
+		return NaN;
+	} else if (a > 0 && a < b) {
+		return a;
+	}
 
+	let isNegative = a < 0 ? true : false;
+	a = Math.abs(a);
+	b = Math.abs(b);
+	return isNegative ? -modulo(a - b, b) : modulo(a - b, b);
 };
 
 /* Modulo Tests */
@@ -103,8 +116,8 @@ assert(22, 'NaN', modulo(5, 0).toString());
 assert(23, 0, modulo(10, 5));
 assert(24, 2, modulo(8, 3));
 
-assert(25, 2, modulo(-6, 4));
-assert(26, 2, modulo(5, -2));
+assert(25, -2, modulo(-6, 4));
+assert(26, 1, modulo(5, -2));
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
