@@ -73,13 +73,10 @@ const divide = (a, b) => {
 		a = Math.abs(a);
 		b = Math.abs(b);
 	}
-	let count = 0;
-	while (a > 0) {
-		a -= b;
-		count++;
-	}
-	return isNegative ? -count : count;
-}
+	
+  let result = 1 + divide(a - b, b);
+	return isNegative ? -result : result;
+};
 
 /* Divide Tests */
 assert(11, 0, divide(0, 1));
