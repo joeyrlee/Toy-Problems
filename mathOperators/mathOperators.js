@@ -121,7 +121,11 @@ assert(26, 1, modulo(5, -2));
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
-// const power;
+//currently only designed to accommodate positive integers
+const power = (a, b) => b === 0 ? 1 : a * power(a, --b);
 
 /* Power Tests */
-
+assert(31, 1, power(2, 0));
+assert(32, 4, power(4, 1));
+assert(33, 9, power(3, 2));
+assert(34, 256, power(2, 8));
