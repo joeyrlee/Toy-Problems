@@ -4,10 +4,10 @@
 // 2. do it in linear time with linear space
 // 3. do it in linear time with constant space
 
-/* Brute-Force O(nlog(n)) with constant space */
+/* Brute-Force O(nlog(n)) with O(1) space */
 const organize = arr => arr.sort((a, b) => Number(a[1]) - Number(b[1]));
 
-/* Linear-Time with O(n) space */
+/* O(n) time with O(n) space */
 const organize2 = arr => {
   const n = arr.length;
   let aStart = 0;
@@ -24,11 +24,25 @@ const organize2 = arr => {
     }
   }
   return results;
+  
+  /* Alternate solution */
+//   const findCorrectIndex = entry => {
+//     let numRounds = (Number(entry[1]) - 1) * 3;
+//     return entry[0] === 'a' ? numRounds : entry[0] === 'b' ? numRounds + 1 : numRounds + 2;
+//   };
+//   let sortedArr = [];
+//   arr.forEach(entry => sortedArr[findCorrectIndex(entry)] = entry);
+//   return sortedArr;
 };
 
 /* Linear-Time with constant space */
-//1. Run swap-chains (each Math.floor((n - 2) / 2) long where n is arr.length) starting at indices 1 & 2
-//
 const organize3 = arr => {
-  //currently in progress
+  const findCorrectIndex = entry => {
+    let rounds = (Number(entry[1]) - 1) * 3;
+    return entry[0] === 'a' ? rounds : entry[0] === 'b' ? rounds + 1 : rounds + 2;
+  };
+  
+  //in-place sort via parallel assignment
+  arr.forEach((entry, idx) => [arr[idx], arr[findCorrectIndex(entry)]] = [arr[findCorrectIndex(entry)], arr[idx]]);
+  return arr;
 };
