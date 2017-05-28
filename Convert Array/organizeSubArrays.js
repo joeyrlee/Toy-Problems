@@ -37,12 +37,5 @@ const organize2 = arr => {
 
 /* Linear-Time with constant space */
 const organize3 = arr => {
-  const findCorrectIndex = entry => {
-    let rounds = (Number(entry[1]) - 1) * 3;
-    return entry[0] === 'a' ? rounds : entry[0] === 'b' ? rounds + 1 : rounds + 2;
-  };
-  
-  //in-place sort via parallel assignment
-  arr.forEach((entry, idx) => [arr[idx], arr[findCorrectIndex(entry)]] = [arr[findCorrectIndex(entry)], arr[idx]]);
-  return arr;
+  // currently a work in progress
 };
