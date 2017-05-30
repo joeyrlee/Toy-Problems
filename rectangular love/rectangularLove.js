@@ -13,14 +13,15 @@ All possible cases (see drawing for a visual):
 0. no overlap
 1. complete overlap of both rectangles
 2. complete immersion of one rectangle
-3. middle no-corner sectional overlap
-4. corner overlap
-5. alternative corner overlap
-6. middle total pass-through
-7. weird different dimensions case
+3. middle total pass-through
+4. partial pass-through
+5. middle no-corner sectional overlap
+6. corner overlap
+7. alternative corner overlap
+8. middle total pass-through
+9. weird different dimensions case
 */
 
-//use spaces for github inspection by anthony
 const copyObj = (obj1, obj2) => {
   for (let key in obj2) {
     obj1[key] = obj2[key];
@@ -28,6 +29,7 @@ const copyObj = (obj1, obj2) => {
   return obj1;
 };
 
+//use spaces for github inspection by anthony
 const rectangularLove = (obj1, obj2) => {
   var newRectangle = {};
   //swap so that obj1.btmX is always <= obj2.btmX
@@ -60,9 +62,26 @@ const rectangularLove = (obj1, obj2) => {
   	         obj2.btmY + obj2.height < obj1.btmY + obj1.height) {
   	return copyObj(newRectangle, obj2);
   }
-  //middle no-corner sectional overlap (case 3)
-
-  //corner overlap (case 4)
+  //middle total pass-through (case 3)
+  if (obj1.btmX < obj2.btmX && obj1.btmX + obj1.width > obj2.btmX + obj2.width &&
+      obj2.btmY + obj2.height > obj1.btmY + obj1.height) {
+    newRectangle.btmX = obj2.btmX;
+    newRectangle.btmY = obj1.btmY;
+    newRectangle.width = obj2.width;
+    newRectangle.height = obj1.height;
+    return newRectangle;
+  }
+  //middle no-corner sectional overlap (case 4)
+  // if (left middle overlap of obj1) {
+    
+  // } else if (right middle overlap of obj2) {
+    
+  // } else if (top middle overlap of obj2) {
+    
+  // } else if (bottom middle overlap of obj2) {
+    
+  // }
+  //corner overlap (case 6)
     //new btmX is obj1 btmX + width - obj2 btmX - obj1 btmX
 
     //new btmY is obj1 btmY + height - obj2 btmY
@@ -70,10 +89,6 @@ const rectangularLove = (obj1, obj2) => {
     //newRect width is 
 
     //newRect height is 
-
-  //middle total pass-through (case 6)
-
-
   return newRectangle;
 };
 
@@ -198,4 +213,27 @@ const test4 = [
 ];
 assertObjectsEqual(...test4);
 
-
+const test5 = [
+  {
+    btmX: 2,
+    btmY: 2,
+    width: 6,
+    height: 5
+  }, 
+  rectangularLove(
+    {
+      btmX: 0,
+      btmY: 2,
+      width: 10,
+      height: 5
+    }, 
+    {
+      btmX: 2,
+      btmY: 0,
+      width: 6,
+      height: 10
+    }
+  ), 
+  "5. it should identify complete horizontal and vertical passthrough of one rectangle within another"
+];
+assertObjectsEqual(...test4);
