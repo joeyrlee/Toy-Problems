@@ -15,11 +15,10 @@ All possible cases (see drawing for a visual):
 2. complete immersion of one rectangle
 3. middle total pass-through
 4. partial pass-through
-5. middle no-corner sectional overlap
-6. corner overlap
-7. alternative corner overlap
-8. middle total pass-through
-9. weird different dimensions case
+5. corner overlap
+6. alternative corner overlap
+7. middle total pass-through
+8. weird different dimensions case
 */
 
 const copyObj = (obj1, obj2) => {
@@ -71,15 +70,15 @@ const rectangularLove = (obj1, obj2) => {
     newRectangle.height = obj1.height;
     return newRectangle;
   }
-  //middle no-corner sectional overlap (case 4)
+  //partial pass-through (case 4)
   // if (left middle overlap of obj1) {
-    
+    //only width requires math: obj1.btmX + width - (obj2.btmX - obj1.btmX)
   // } else if (right middle overlap of obj2) {
-    
+    //only width requires math: obj2.btmX - obj1.btmX
   // } else if (top middle overlap of obj2) {
-    
+    //only height requires math: difference of obj1.btmX + height - obj2.btmY
   // } else if (bottom middle overlap of obj2) {
-    
+    //only height requires math: difference of obj1.btmX + height - obj2.btmY + height
   // }
   //corner overlap (case 6)
     //new btmX is obj1 btmX + width - obj2 btmX - obj1 btmX
@@ -236,4 +235,54 @@ const test5 = [
   ), 
   "5. it should identify complete horizontal and vertical passthrough of one rectangle within another"
 ];
-assertObjectsEqual(...test4);
+assertObjectsEqual(...test5);
+
+const test6 = [
+  {
+    btmX: 7,
+    btmY: 2,
+    width: 3,
+    height: 5
+  }, 
+  rectangularLove(
+    {
+      btmX: 0,
+      btmY: 2,
+      width: 10,
+      height: 5
+    }, 
+    {
+      btmX: 7,
+      btmY: 0,
+      width: 6,
+      height: 10
+    }
+  ), 
+  "6. it should identify partial horizontal pass-throughs"
+];
+assertObjectsEqual(...test6);
+
+const test7 = [
+  {
+    btmX: 2,
+    btmY: 2,
+    width: 2,
+    height: 2
+  }, 
+  rectangularLove(
+    {
+      btmX: 0,
+      btmY: 0,
+      width: 6,
+      height: 5
+    }, 
+    {
+      btmX: 2,
+      btmY: 3,
+      width: 2,
+      height: 5
+    }
+  ), 
+  "7. it should identify partial vertical pass-throughs"
+];
+assertObjectsEqual(...test7);
