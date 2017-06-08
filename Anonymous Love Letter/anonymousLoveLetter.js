@@ -3,25 +3,25 @@
 
 /* Solution uses O(L + N) time complexity and O(L) space complexity */
 const writeLetter = (L, N) => {
-  const letterCount = {};
+  const letterCount = new Map();
   //for each character in L
-  for (let i = 0; i < L.length; i++) {
+  for (let char of L) {
     //tabulate our letter counts needed
-    letterCount.hasOwnProperty(L[i])
-      ? letterCount[L[i]] += 1
-      : letterCount[L[i]] = 1;
+    letterCount.has(char)
+      ? letterCount.set(char, letterCount.get(char) + 1)
+      : letterCount.set(char, 1);
   }
   //for each character in N
-  for (let i = 0; i < N.length; i++) {
+  for (let char of N) {
     //decrement each character we encounter's value from letterCount
-    if (letterCount[N[i]] !== undefined && letterCount[N[i]] > 1) {
-      letterCount[N[i]] -= 1;
+    if (letterCount.has(char) && letterCount.get(char) > 1) {
+      letterCount.set(char, letterCount.get(char) - 1);
     //or delete the key altogether if there's only 1 left
-    } else if (letterCount[N[i]] !== undefined && letterCount[N[i]] <= 1) {
-      delete letterCount[N[i]];
+    } else if (letterCount.has(char) && letterCount.get(char) <= 1) {
+      letterCount.delete(char);
     }
     //answer is true if and when there are no keys left
-    if (Object.keys(letterCount).length === 0) {
+    if (!letterCount.size) {
       return true;
     }
   }
