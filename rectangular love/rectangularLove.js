@@ -71,11 +71,21 @@ const rectangularLove = (obj1, obj2) => {
     return newRectangle;
   }
   //partial pass-through (case 4)
-  // if (left middle overlap of obj1) {
-    //only width requires math: obj1.btmX + width - (obj2.btmX - obj1.btmX)
-  // } else if (right middle overlap of obj2) {
-    //only width requires math: obj2.btmX - obj1.btmX
-  // } else if (top middle overlap of obj2) {
+  if (obj1.btmX + obj1.width > obj2.btmX && obj1.btmX + obj1.width < obj2.btmX + obj2.width &&
+  	  obj1.btmY > obj2.btmY && obj1.btmY + obj1.height > obj2.btmY + obj2.height) {
+  	newRectangle.btmX = obj2.btmX;
+  	newRectangle.btmY = obj1.btmY;
+    newRectangle.width = obj1.btmX + obj1.width - obj2.btmX;
+    newRectangle.height = obj1.height;
+    return newRectangle;
+  } else if (obj1.btmX < obj2.btmX && obj1.btmX + obj1.width > obj2.btmX && 
+             obj2.btmY > obj1.btmY && obj2.btmY + obj2.height < obj1.btmY + obj1.height &&
+             obj2.btmX + obj1.width > obj1.btmX + obj1.width) {
+  	newRectangle.btmX = obj2.btmX;
+  	newRectangle.btmY = obj2.btmY;
+    newRectangle.width = obj1.btmX + obj1.width - obj2.btmX;
+    newRectangle.height = obj2.height;
+  }// else if (top middle overlap of obj2) {
     //only height requires math: difference of obj1.btmX + height - obj2.btmY
   // } else if (bottom middle overlap of obj2) {
     //only height requires math: difference of obj1.btmX + height - obj2.btmY + height
@@ -239,20 +249,20 @@ assertObjectsEqual(...test5);
 
 const test6 = [
   {
-    btmX: 7,
+    btmX: 4,
     btmY: 2,
     width: 3,
-    height: 5
+    height: 6
   }, 
   rectangularLove(
     {
       btmX: 0,
       btmY: 2,
-      width: 10,
-      height: 5
+      width: 7,
+      height: 6
     }, 
-    {
-      btmX: 7,
+    {	
+      btmX: 4,
       btmY: 0,
       width: 6,
       height: 10
