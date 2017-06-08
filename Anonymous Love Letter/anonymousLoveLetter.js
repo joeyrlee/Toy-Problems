@@ -1,8 +1,31 @@
 //Inputs: str L for letter, N for newspaper
 //Outputs: eval of if letter L can be written using the characters from N
 
+/* Solution uses O(L + N) time complexity and O(L) space complexity */
 const writeLetter = (L, N) => {
-
+  const letterCount = {};
+  //for each character in L
+  for (let i = 0; i < L.length; i++) {
+    //tabulate our letter counts needed
+    letterCount.hasOwnProperty(L[i])
+      ? letterCount[L[i]] += 1
+      : letterCount[L[i]] = 1;
+  }
+  //for each character in N
+  for (let i = 0; i < N.length; i++) {
+    //decrement each character we encounter's value from letterCount
+    if (letterCount[N[i]] !== undefined && letterCount[N[i]] > 1) {
+      letterCount[N[i]] -= 1;
+    //or delete the key altogether if there's only 1 left
+    } else if (letterCount[N[i]] !== undefined && letterCount[N[i]] <= 1) {
+      delete letterCount[N[i]];
+    }
+    //answer is true if and when there are no keys left
+    if (Object.keys(letterCount).length === 0) {
+      return true;
+    }
+  }
+  return false;
 };
 
 
@@ -27,7 +50,7 @@ assertEqual(writeLetter('My letter', 'my letter'), false, 'should differentiate 
 assertEqual(writeLetter('My letter', 'my letr'), false, 'should return false when insufficient quantity of characters');
 
 /* test 5 */
-assertEqual(writeLetter('my letter', 'my letter'), false, 'should return true when exactly enough matching characters');
+assertEqual(writeLetter('my letter', 'my letter'), true, 'should return true when exactly enough matching characters');
 
 /* test 6 */
-assertEqual(writeLetter('my letter', 'my letter my letter'), false, 'should return true when an excess of matching characters');
+assertEqual(writeLetter('my letter', 'my letter my letter'), true, 'should return true when an excess of matching characters');
