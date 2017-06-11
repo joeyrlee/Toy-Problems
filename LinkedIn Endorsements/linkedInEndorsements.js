@@ -27,22 +27,20 @@ var expectedResult = [
 //O: array of endorsements by skills
 //Time complexity of O(n) and space complexity of O(n)
 const organizeEndorsements = endorsements => {
-  const skills = {};
-  //for endorsements
-  for (let i = 0; i < endorsements.length; i++) {
+  //reduce endorsements to a dictionary of skills
+  const skills = endorsements.reduce((acc, currEnd) => {
     //if current endorsements skill exists
-    if (skills.hasOwnProperty(endorsements[i].skill)) {
-      //add endorsements.user to proper skills[endorsements[i]].user array
-      skills[endorsements[i].skill].user.push(endorsements[i].user);
+    if (acc.hasOwnProperty(currEnd.skill)) {
+      //add endorsements.user to proper acc[endorsements[i]].user array
+      acc[currEnd.skill].user.push(currEnd.user);
       //increment the skill's count by 1
-      skills[endorsements[i].skill].count++;
-    //else
-    } else {
-      //initialize endorsement with user: current user and count: 1
-      skills[endorsements[i].skill] = {user: [endorsements[i].user], count: 1};
+      acc[currEnd.skill].count++;
+      return acc;
     }
-    
-  }
+    //else initialize endorsement with user: current user and count: 1
+    acc[currEnd.skill] = {user: [currEnd.user], count: 1};
+    return acc;
+  }, {});
   
   const results = [];
   //for keys in skills
