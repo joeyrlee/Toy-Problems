@@ -37,7 +37,7 @@ const wordCountEngine = str => {
   //pointing to the same exact bucket in memory
   let sortedBucket = new Array(highestCount+1).fill(0).map(val=>[]);
   //a simple variation of a bucket sort using
-  //`bucket`'s word counts as bucket numbers/indices
+  //words' respective counts as bucket numbers/indices
   for (let word in wordMap) {
     let bucketNum = wordMap[word];
     sortedBucket[bucketNum].push(word);
