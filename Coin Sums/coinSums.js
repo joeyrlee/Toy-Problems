@@ -19,45 +19,24 @@ const coinSumsBF = target => {
 };
 
 /* Time-efficient O(pn) dynamic programming solution */
-//aggregate the coin options for our current total
-const takeWhile = function (arr, predicate) {
-  let result = [];
-  let i = 0;
-  while (predicate(arr[i])) {
-    result.push(arr[i++]);
-  }
-  return result;
-};
-
-//limit the selection of coin choices based on decrementing total
-const possibleChoices = function (total, max) {
-  return takeWhile(coins, function (coin) {
-    return total >= coin && coin <= max;
-  });
-};
-
-const memoize = function (func, context) {
+const memoize = func => {
   const cache = {};
-  return function () {
-    if (!(JSON.stringify(arguments) in cache)) {
-      cache[JSON.stringify(arguments)] = func.apply(context, arguments);
-    }
-    return cache[JSON.stringify(arguments)];
+  return function() {
+    let ser = JSON.stringify(arguments);
+    return ser[cache] = ser[cache] || func.apply(this, arguments);
   };
 };
-                                 
-const makeChange = memoize(function (total, last) {
-  last = last || total;
+
+const pieces = [1,2,5,10,20,50,100,200];
+
+const makeChange = memoize((total, last) => {
   //base case
-  if (total === 0) {
-    return 1;
-  }
+  if (total === 0) { return 1; }
+  
   //recursive case
+  last = last || total;
   let result = 0;
-  let choices = possibleChoices(total, last);
-  for (let i = 0; i < choices.length; i++) {
-    let coin = choices[i];
-    result += makeChange(total - coin, coin);
-  }
+  pieces.filter(piece => piece <= total && piece <= last)
+        .forEach(piece => result += makeChange(total - piece, piece));
   return result;
 });
